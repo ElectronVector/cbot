@@ -31,13 +31,13 @@ def new(target_dir, project_name):
 
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath='cbot/templates/'))
 
-    generate_file_from_template(environment, project_name, target_dir, 'CMakeLists.txt')
-    generate_file_from_template(environment, project_name, target_dir, 'src/main.c')
+    generate_file_from_template(environment, new_project_dir, project_name, 'CMakeLists.txt')
+    generate_file_from_template(environment, new_project_dir, project_name, 'src/main.c')
 
 
-def generate_file_from_template(environment, project_name, target_dir, filename):
-    template = environment.get_template(filename)
-    with Path(target_dir, project_name, filename).open(mode='w') as f:
+def generate_file_from_template(environment, project_path, project_name, project_file_path):
+    template = environment.get_template(project_file_path)
+    with Path(project_path, project_file_path).open(mode='w') as f:
         f.write(template.render(project_name=project_name))
 
 
