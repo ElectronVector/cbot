@@ -2,6 +2,8 @@ from pathlib import Path
 
 import click
 
+from cbot.new import new_project
+
 
 @click.group()
 def cli():
@@ -17,9 +19,10 @@ def new(project_name):
     """
     if Path.exists(Path(project_name)):
         click.echo(f"Error: a directory named '{project_name}' already exists")
-        exit(-1)
+        return -1
 
     click.echo(f"Creating new project '{project_name}'...")
+    new_project('.', project_name)
 
 
 cli.add_command(new)
