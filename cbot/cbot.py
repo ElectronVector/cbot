@@ -7,17 +7,16 @@ def cli():
 
 
 @click.command()
-def new():
-    print('running new...')
+@click.argument('directory')
+def new(directory):
+    """ Create a new cbot project
 
-
-@click.command()
-def module():
-    print('running module...')
+    DIRECTORY is where the new project will be created
+    """
+    click.echo(f'running new on {directory}...')
 
 
 cli.add_command(new)
-cli.add_command(module)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
