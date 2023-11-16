@@ -1,5 +1,11 @@
 from pathlib import Path
 
+DEFAULT_TEST_DIR = 'test'
+
+DEFAULT_INCLUDE_DIR = 'src'
+
+DEFAULT_SOURCE_DIR = 'src'
+
 
 class TargetDirNotFoundError(Exception):
     """Raise when the target directory for the new project cannot be found."""
@@ -16,12 +22,13 @@ def new(target_dir, project_name):
         Path.mkdir(new_project_dir)
 
     # Create the internal project directories.
-    source_dir = Path(new_project_dir, 'src')
-    include_dir = Path(new_project_dir, 'src')
-    test_dir = Path(new_project_dir, 'test')
-    if not Path.exists(source_dir):
-        Path.mkdir(source_dir)
-    if not Path.exists(include_dir):
-        Path.mkdir(include_dir)
-    if not Path.exists(test_dir):
-        Path.mkdir(test_dir)
+
+    create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_SOURCE_DIR)
+    create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_INCLUDE_DIR)
+    create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_TEST_DIR)
+
+
+def create_default_internal_dir_if_necessary(new_project_dir, internal_dir):
+    new_dir = Path(new_project_dir, internal_dir)
+    if not Path.exists(new_dir):
+        Path.mkdir(new_dir)
