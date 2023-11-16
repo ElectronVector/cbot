@@ -30,8 +30,12 @@ def new(target_dir, project_name):
     Path.touch(Path(target_dir, project_name, 'CMakeLists.txt'))
 
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath='cbot/templates/'))
-    template = environment.get_template('main.c')
 
+    template = environment.get_template('CMakeLists.txt')
+    with Path(target_dir, project_name, 'CMakeLists.txt').open(mode='w') as f:
+        f.write(template.render(project_name=project_name))
+
+    template = environment.get_template('main.c')
     with Path(target_dir, project_name, DEFAULT_SOURCE_DIR, 'main.c').open(mode='w') as f:
         f.write(template.render(project_name=project_name))
 

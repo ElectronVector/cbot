@@ -80,5 +80,13 @@ def test_new_main_contains_message_with_project_name(test_data_dir):
     assert 'Running example from main()...' in file_contents
 
 
+def test_new_cmakelists_contains_project_name(test_data_dir):
+    new_project_name = 'example'
+    new(TEST_DATA_DIR, new_project_name)
+    with Path(TEST_DATA_DIR, 'example', 'CMakeLists.txt').open() as f:
+        file_contents = f.read()
+    assert 'project(example C)' in file_contents
+
+
 def test_new_creates_a_buildable_project():
     pass
