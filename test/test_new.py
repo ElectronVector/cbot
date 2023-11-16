@@ -1,9 +1,7 @@
 # Test the new module for new project creation.
+import pytest
 import shutil
 from pathlib import Path
-
-import jinja2 as jinja2
-import pytest
 
 from cbot.new import new, TargetDirNotFoundError
 
@@ -95,7 +93,3 @@ def test_new_cmakelists_contains_project_name(test_data_dir):
         Path(TEST_DATA_DIR, 'example', 'CMakeLists.txt'),
         'project(example C)'
     )
-
-
-def test_new_creates_a_buildable_project():
-    pass
