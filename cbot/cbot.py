@@ -2,7 +2,7 @@ from pathlib import Path
 
 import click
 
-from cbot.new import new_project
+import cbot.new
 
 
 @click.group()
@@ -22,7 +22,7 @@ def new(project_name):
         return -1
 
     click.echo(f"Creating new project '{project_name}'...")
-    new_project('.', project_name)
+    cbot.new.new('.', project_name)
 
 
 cli.add_command(new)
