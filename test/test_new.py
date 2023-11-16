@@ -52,8 +52,10 @@ def test_new_creates_inc_folder(test_data_dir):
     assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'src'))
 
 
-def test_new_creates_test_folder():
-    pass
+def test_new_creates_test_folder(test_data_dir):
+    new_project_name = 'example'
+    new(TEST_DATA_DIR, new_project_name)
+    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'test'))
 
 
 def test_new_creates_cmakelists():
