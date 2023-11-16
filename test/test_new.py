@@ -64,8 +64,10 @@ def test_new_creates_cmakelists(test_data_dir):
     assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'CMakeLists.txt'))
 
 
-def test_new_creates_main():
-    pass
+def test_new_creates_main(test_data_dir):
+    new_project_name = 'example'
+    new(TEST_DATA_DIR, new_project_name)
+    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'src', 'main.c'))
 
 
 def test_new_creates_a_buildable_project():
