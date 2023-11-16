@@ -27,6 +27,8 @@ def new(target_dir, project_name):
     create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_INCLUDE_DIR)
     create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_TEST_DIR)
 
+    Path.touch(Path(target_dir, project_name, "CMakeLists.txt"))
+
 
 def create_default_internal_dir_if_necessary(new_project_dir, internal_dir):
     new_dir = Path(new_project_dir, internal_dir)
