@@ -2,6 +2,8 @@ from pathlib import Path
 
 import jinja2
 
+TEMPLATE_PATH = 'cbot/templates/'
+
 DEFAULT_TEST_DIR = 'test'
 DEFAULT_INCLUDE_DIR = 'src'
 DEFAULT_SOURCE_DIR = 'src'
@@ -27,15 +29,12 @@ def new(target_dir, project_name):
     create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_INCLUDE_DIR)
     create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_TEST_DIR)
 
-    Path.touch(Path(target_dir, project_name, 'CMakeLists.txt'))
-
-    environment = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath='cbot/templates/'))
-
-    generate_file_from_template(environment, new_project_dir, project_name, 'CMakeLists.txt')
-    generate_file_from_template(environment, new_project_dir, project_name, 'src/main.c')
+    generate_file_from_template(new_project_dir, project_name, 'CMakeLists.txt')
+    generate_file_from_template(new_project_dir, project_name, 'src/main.c')
 
 
-def generate_file_from_template(environment, project_path, project_name, project_file_path):
+def generate_file_from_template(project_path, project_name, project_file_path):
+    environment = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath=TEMPLATE_PATH))
     template = environment.get_template(project_file_path)
     with Path(project_path, project_file_path).open(mode='w') as f:
         f.write(template.render(project_name=project_name))
