@@ -7,7 +7,7 @@ class TargetDirNotFoundError(Exception):
 
 def new(target_dir, project_name):
     if not Path.exists(Path(target_dir)):
-        raise TargetDirNotFoundError
+        raise TargetDirNotFoundError(f"Target directory '{target_dir}' not found")
     new_project_folder = Path(target_dir, project_name)
     if not Path.exists(new_project_folder):
         Path.mkdir(new_project_folder)
