@@ -11,3 +11,10 @@ def new(target_dir, project_name):
     new_project_folder = Path(target_dir, project_name)
     if not Path.exists(new_project_folder):
         Path.mkdir(new_project_folder)
+
+    source_dir = Path(new_project_folder, 'src')
+    include_dir = Path(new_project_folder, 'src')
+    if not Path.exists(source_dir):
+        Path.mkdir(source_dir)
+    if not Path.exists(include_dir):
+        Path.mkdir(include_dir)

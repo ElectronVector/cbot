@@ -40,12 +40,16 @@ def test_new_doesnt_create_folder_if_target_path_doesnt_exist():
         new(TEST_DATA_DIR, new_project_name)
 
 
-def test_new_creates_src_folder():
-    pass
+def test_new_creates_src_folder(test_data_dir):
+    new_project_name = 'example'
+    new(TEST_DATA_DIR, new_project_name)
+    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'src'))
 
 
-def test_new_creates_inc_folder():
-    pass
+def test_new_creates_inc_folder(test_data_dir):
+    new_project_name = 'example'
+    new(TEST_DATA_DIR, new_project_name)
+    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'src'))
 
 
 def test_new_creates_test_folder():
