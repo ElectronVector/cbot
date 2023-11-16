@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import click
 
 
@@ -7,13 +9,17 @@ def cli():
 
 
 @click.command()
-@click.argument('directory')
-def new(directory):
-    """ Create a new cbot project
+@click.argument('project_name')
+def new(project_name):
+    """ Create a new cbot project in a new subdirectory in the current directory.
 
-    DIRECTORY is where the new project will be created
+    PROJECT_NAME is the name of the new project to create. A directory with this name must not already exist.
     """
-    click.echo(f'running new on {directory}...')
+    if Path.exists(Path(project_name)):
+        click.echo(f"Error: a directory named '{project_name}' already exists")
+        exit(-1)
+
+    click.echo(f"Creating new project '{project_name}'...")
 
 
 cli.add_command(new)
