@@ -1,6 +1,8 @@
 # Test the new module for new project creation.
 import shutil
 from pathlib import Path
+
+import jinja2 as jinja2
 import pytest
 
 from cbot.new import new, TargetDirNotFoundError
@@ -68,6 +70,22 @@ def test_new_creates_main(test_data_dir):
     new_project_name = 'example'
     new(TEST_DATA_DIR, new_project_name)
     assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'src', 'main.c'))
+
+
+def test_new_contains_message_with_project_name(test_data_dir):
+    new_project_name = 'example'
+    new(TEST_DATA_DIR, new_project_name)
+    with Path(TEST_DATA_DIR, 'example', 'src', 'main.c').open() as f:
+        file_contents = f.read()
+    assert 'Running example from main()...' in file_contents
+
+
+def test_new_contains_message_with_a_different_project_name(test_data_dir):
+    new_project_name = 'example2'
+    new(TEST_DATA_DIR, new_project_name)
+    with Path(TEST_DATA_DIR, 'example2', 'src', 'main.c').open() as f:
+        file_contents = f.read()
+    assert 'Running example2 from main()...' in file_contents
 
 
 def test_new_creates_a_buildable_project():
