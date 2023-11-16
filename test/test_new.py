@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 import pytest
 
-from cbot.new import new
+from cbot.new import new, TargetDirNotFoundError
 
 TEST_DATA_DIR = '.test_data'
 
@@ -24,19 +24,20 @@ def data_dir():
 def test_new_creates_folder_if_it_doesnt_exist(data_dir):
     new_project_name = 'example'
     new(TEST_DATA_DIR, new_project_name)
-    assert (Path.exists(Path(TEST_DATA_DIR, new_project_name)))
+    assert Path.exists(Path(TEST_DATA_DIR, new_project_name))
 
 
 def test_new_doesnt_create_folder_if_it_exists(data_dir):
     new_project_name = 'example'
     Path.mkdir(Path(TEST_DATA_DIR, new_project_name))
     new(TEST_DATA_DIR, new_project_name)
-    assert (Path.exists(Path(TEST_DATA_DIR, new_project_name)))
-    pass
+    assert Path.exists(Path(TEST_DATA_DIR, new_project_name))
 
 
 def test_new_doesnt_create_folder_if_target_path_doesnt_exist():
-    pass
+    new_project_name = 'example'
+    with pytest.raises(TargetDirNotFoundError):
+        new(TEST_DATA_DIR, new_project_name)
 
 
 def test_new_creates_src_folder():
