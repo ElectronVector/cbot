@@ -28,23 +28,7 @@ def new(project_name):
 
 
 cli.add_command(new)
-
-
-@click.command()
-def build():
-    """ Build the project in the current folder with CMake.
-
-    Reload all CMake files and execute the build.
-    """
-    if not Path('CMakeLists.txt').exists():
-        click.echo(f"Error: a 'CMakeLists.txt' file was not found")
-        sys.exit(-1)
-
-    click.echo(f"Building...")
-    sys.exit(cbot.build_command.execute())
-
-
-cli.add_command(build)
+cli.add_command(cbot.build_command.build)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
