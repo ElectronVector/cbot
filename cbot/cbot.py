@@ -3,13 +3,14 @@ from pathlib import Path
 
 import click
 
-import cbot.new
+import cbot.new_command
 import cbot.build_command
 
 
 @click.group()
 def cli():
     pass
+
 
 @click.command()
 @click.argument('project_name')
@@ -23,7 +24,7 @@ def new(project_name):
         return -1
 
     click.echo(f"Creating new project '{project_name}'...")
-    cbot.new.new('.', project_name)
+    cbot.new_command.execute('.', project_name)
 
 
 cli.add_command(new)

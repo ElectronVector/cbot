@@ -11,7 +11,7 @@ class TargetDirNotFoundError(Exception):
     """Raise when the target directory for the new project cannot be found."""
 
 
-def new(target_dir, project_name):
+def execute(target_dir, project_name):
     # Check that the target directory exists.
     if not Path.exists(Path(target_dir)):
         raise TargetDirNotFoundError(f"Target directory '{target_dir}' not found")
