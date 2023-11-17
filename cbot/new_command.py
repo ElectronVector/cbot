@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import click
 import jinja2
 
 DEFAULT_TEST_DIR = 'test'
@@ -9,6 +10,21 @@ DEFAULT_SOURCE_DIR = 'src'
 
 class TargetDirNotFoundError(Exception):
     """Raise when the target directory for the new project cannot be found."""
+
+
+@click.command()
+@click.argument('project_name')
+def new(project_name):
+    """ Create a new cbot project in the current directory.
+
+    PROJECT_NAME is the name of the new project to create. A directory with this name must not already exist.
+    """
+    if Path.exists(Path(project_name)):
+        click.echo(f"Error: a directory named '{project_name}' already exists")
+        return -1
+
+    click.echo(f"Creating new project '{project_name}'...")
+    execute('.', project_name)
 
 
 def execute(target_dir, project_name):
@@ -42,3 +58,4 @@ def create_default_internal_dir_if_necessary(new_project_dir, internal_dir):
     new_dir = Path(new_project_dir, internal_dir)
     if not Path.exists(new_dir):
         Path.mkdir(new_dir)
+
