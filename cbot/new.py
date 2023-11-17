@@ -2,8 +2,6 @@ from pathlib import Path
 
 import jinja2
 
-TEMPLATE_PATH = 'cbot/templates/'
-
 DEFAULT_TEST_DIR = 'test'
 DEFAULT_INCLUDE_DIR = 'src'
 DEFAULT_SOURCE_DIR = 'src'
@@ -24,7 +22,6 @@ def new(target_dir, project_name):
         Path.mkdir(new_project_dir)
 
     # Create the internal project directories.
-
     create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_SOURCE_DIR)
     create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_INCLUDE_DIR)
     create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_TEST_DIR)
@@ -34,7 +31,8 @@ def new(target_dir, project_name):
 
 
 def generate_file_from_template(project_path, project_name, project_file_path):
-    environment = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath=TEMPLATE_PATH))
+    template_location = Path(__file__).parent / 'templates'
+    environment = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath=template_location))
     template = environment.get_template(project_file_path)
     with Path(project_path, project_file_path).open(mode='w') as f:
         f.write(template.render(project_name=project_name))
