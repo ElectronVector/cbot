@@ -11,7 +11,6 @@ import cbot.build_command
 def cli():
     pass
 
-
 @click.command()
 @click.argument('project_name')
 def new(project_name):
