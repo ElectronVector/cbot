@@ -8,12 +8,6 @@ from cbot.new import new, TargetDirNotFoundError
 TEST_DATA_DIR = '.test_data'
 
 
-def file_contains(file, string):
-    with file.open() as f:
-        file_contents = f.read()
-    return string in file_contents
-
-
 @pytest.fixture()
 def test_data_dir():
     # Create a clean test data directory.
@@ -79,17 +73,10 @@ def test_new_creates_main(test_data_dir):
 def test_new_main_contains_message_with_project_name(test_data_dir):
     new_project_name = 'example'
     new(TEST_DATA_DIR, new_project_name)
-
-    assert file_contains(
-        Path(TEST_DATA_DIR, 'example', 'src', 'main.c'),
-        'Running example from main()...'
-    )
+    assert 'Running example from main()...' in Path(TEST_DATA_DIR, 'example', 'src', 'main.c').read_text()
 
 
 def test_new_cmakelists_contains_project_name(test_data_dir):
     new_project_name = 'example'
     new(TEST_DATA_DIR, new_project_name)
-    assert file_contains(
-        Path(TEST_DATA_DIR, 'example', 'CMakeLists.txt'),
-        'project(example C)'
-    )
+    assert 'project(example C)' in Path(TEST_DATA_DIR, 'example', 'CMakeLists.txt').read_text()
