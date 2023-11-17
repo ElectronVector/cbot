@@ -1,8 +1,10 @@
+import sys
 from pathlib import Path
 
 import click
 
 import cbot.new
+import cbot.build_command
 
 
 @click.group()
@@ -26,6 +28,23 @@ def new(project_name):
 
 
 cli.add_command(new)
+
+
+@click.command()
+def build():
+    """ Build the project in the current folder with CMake.
+
+    Reload all CMake files and execute the build.
+    """
+    if not Path('CMakeLists.txt').exists():
+        click.echo(f"Error: a 'CMakeLists.txt' file was not found")
+        sys.exit(-1)
+
+    click.echo(f"Building...")
+    sys.exit(cbot.build_command.run())
+
+
+cli.add_command(build)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
