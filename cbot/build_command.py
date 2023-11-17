@@ -4,8 +4,9 @@ import subprocess
 from pathlib import Path
 
 
-def run():
+def execute():
     print(Path.cwd())
     if Path('build').exists():
         shutil.rmtree('build')
-    return subprocess.run(['cmake', '-S', '.', '-B', 'build']).returncode
+    result = subprocess.run(['cmake', '-S', '.', '-B', 'build']).returncode
+    return subprocess.run(['cmake', '--build', 'build']).returncode

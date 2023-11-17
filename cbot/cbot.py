@@ -41,7 +41,7 @@ def build():
         sys.exit(-1)
 
     click.echo(f"Building...")
-    sys.exit(cbot.build_command.run())
+    sys.exit(cbot.build_command.execute())
 
 
 cli.add_command(build)
