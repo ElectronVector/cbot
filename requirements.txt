@@ -1,0 +1,5 @@
+Jinja2~=3.1.2
+click~=8.1.7
+cbot~=0.1.0
+pytest~=7.4.3
+setuptools~=68.0.0
