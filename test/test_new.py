@@ -8,6 +8,7 @@ import cbot.defaults
 
 TEST_DATA_DIR = '.test_data'
 
+
 # Todo: Use tmp_dir provided by pytest, and the isolated_filesystem provided by click.
 @pytest.fixture()
 def test_data_dir():
