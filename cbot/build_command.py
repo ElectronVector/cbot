@@ -3,10 +3,8 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-
 import click
-
-DEFAULT_BUILD_DIR = 'build'
+import cbot.defaults
 
 
 @click.command()
@@ -26,11 +24,11 @@ def build():
 def execute():
     print(Path.cwd())
 
-    if Path(DEFAULT_BUILD_DIR).exists():
-        shutil.rmtree(DEFAULT_BUILD_DIR)
+    if Path(cbot.defaults.DEFAULT_BUILD_DIR).exists():
+        shutil.rmtree(cbot.defaults.DEFAULT_BUILD_DIR)
 
-    result = subprocess.run(['cmake', '-S', '.', '-B', DEFAULT_BUILD_DIR]).returncode
+    result = subprocess.run(['cmake', '-S', '.', '-B', cbot.defaults.DEFAULT_BUILD_DIR]).returncode
 
     if result == 0:
-        result = subprocess.run(['cmake', '--build', DEFAULT_BUILD_DIR]).returncode
+        result = subprocess.run(['cmake', '--build', cbot.defaults.DEFAULT_BUILD_DIR]).returncode
     return result

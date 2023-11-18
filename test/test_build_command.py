@@ -3,6 +3,7 @@ import os
 import pytest
 from pathlib import Path
 from click.testing import CliRunner
+import cbot.defaults
 from cbot.cbot import cbot
 
 
@@ -30,5 +31,5 @@ def test_build_in_new_created_project_creates_a_binary(tmp_path):
         assert result.exit_code == 0
         os.chdir('blerg')
         result = runner.invoke(cbot.cbot.cli, ['build'])
-        assert Path('build/blerg').exists()
+        assert Path(f'{cbot.defaults.DEFAULT_BUILD_DIR}/blerg').exists()
 

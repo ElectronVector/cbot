@@ -3,9 +3,7 @@ from pathlib import Path
 import click
 import jinja2
 
-DEFAULT_TEST_DIR = 'test'
-DEFAULT_INCLUDE_DIR = 'src'
-DEFAULT_SOURCE_DIR = 'src'
+import cbot.defaults
 
 
 class TargetDirNotFoundError(Exception):
@@ -38,12 +36,12 @@ def execute(target_dir, project_name):
         Path.mkdir(new_project_dir)
 
     # Create the internal project directories.
-    create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_SOURCE_DIR)
-    create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_INCLUDE_DIR)
-    create_default_internal_dir_if_necessary(new_project_dir, DEFAULT_TEST_DIR)
+    create_default_internal_dir_if_necessary(new_project_dir, cbot.defaults.DEFAULT_SOURCE_DIR)
+    create_default_internal_dir_if_necessary(new_project_dir, cbot.defaults.DEFAULT_INCLUDE_DIR)
+    create_default_internal_dir_if_necessary(new_project_dir, cbot.defaults.DEFAULT_TEST_DIR)
 
     generate_file_from_template(new_project_dir, project_name, 'CMakeLists.txt')
-    generate_file_from_template(new_project_dir, project_name, 'src/main.c')
+    generate_file_from_template(new_project_dir, project_name, f'{cbot.defaults.DEFAULT_SOURCE_DIR}/main.c')
 
 
 def generate_file_from_template(project_path, project_name, project_file_path):
