@@ -4,6 +4,7 @@ import shutil
 from pathlib import Path
 
 from cbot.new_command import execute, TargetDirNotFoundError
+import cbot.defaults
 
 TEST_DATA_DIR = '.test_data'
 
@@ -43,19 +44,19 @@ def test_new_doesnt_create_folder_if_target_path_doesnt_exist(test_data_dir):
 def test_new_creates_src_folder(test_data_dir):
     new_project_name = 'example'
     execute(TEST_DATA_DIR, new_project_name)
-    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'src'))
+    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, cbot.defaults.DEFAULT_SOURCE_DIR))
 
 
 def test_new_creates_inc_folder(test_data_dir):
     new_project_name = 'example'
     execute(TEST_DATA_DIR, new_project_name)
-    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'src'))
+    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, cbot.defaults.DEFAULT_SOURCE_DIR))
 
 
 def test_new_creates_test_folder(test_data_dir):
     new_project_name = 'example'
     execute(TEST_DATA_DIR, new_project_name)
-    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'test'))
+    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, cbot.defaults.DEFAULT_TEST_DIR))
 
 
 def test_new_creates_cmakelists(test_data_dir):
@@ -67,13 +68,13 @@ def test_new_creates_cmakelists(test_data_dir):
 def test_new_creates_main(test_data_dir):
     new_project_name = 'example'
     execute(TEST_DATA_DIR, new_project_name)
-    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, 'src', 'main.c'))
+    assert Path.exists(Path(TEST_DATA_DIR, new_project_name, cbot.defaults.DEFAULT_SOURCE_DIR, 'main.c'))
 
 
 def test_new_main_contains_message_with_project_name(test_data_dir):
     new_project_name = 'example'
     execute(TEST_DATA_DIR, new_project_name)
-    assert 'Running example from main()...' in Path(TEST_DATA_DIR, 'example', 'src', 'main.c').read_text()
+    assert 'Running example from main()...' in Path(TEST_DATA_DIR, 'example', cbot.defaults.DEFAULT_SOURCE_DIR, 'main.c').read_text()
 
 
 def test_new_cmakelists_contains_project_name(test_data_dir):
