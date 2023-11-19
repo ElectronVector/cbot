@@ -37,3 +37,6 @@ def test_module_create_in_newly_created_project_creates_files(tmp_path):
         assert '#define MY_MODULE_H' in Path(cbot.defaults.DEFAULT_INCLUDE_DIR, 'my_module.h').read_text()
         assert '#include "my_module.h"' in Path(cbot.defaults.DEFAULT_SOURCE_DIR, 'my_module.c').read_text()
         assert 'void test_my_module_NeedToImplement(void)' in Path(cbot.defaults.DEFAULT_TEST_DIR, 'test_my_module.c').read_text()
+
+
+# Todo: Test module created in subdirectory

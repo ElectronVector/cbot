@@ -20,10 +20,11 @@ def module():
 @click.argument('module_name')
 def create(module_name):
     click.echo(f"Creating module '{module_name}'...")
-    cwd = Path.cwd()
 
+    cwd = Path.cwd()
     template_location = Path(__file__).parent / 'templates' / 'module'
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath=template_location))
+
     template = environment.get_template('header.h')
     with Path(cwd, cbot.defaults.DEFAULT_INCLUDE_DIR, f'{module_name}.h').open(mode='w') as f:
         f.write(template.render(module_name=module_name))
