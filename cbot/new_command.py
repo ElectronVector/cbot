@@ -45,7 +45,7 @@ def execute(target_dir, project_name):
 
 
 def generate_file_from_template(project_path, project_name, project_file_path):
-    template_location = Path(__file__).parent / 'templates'
+    template_location = Path(__file__).parent / 'templates' / 'project'
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath=template_location))
     template = environment.get_template(project_file_path)
     with Path(project_path, project_file_path).open(mode='w') as f:
