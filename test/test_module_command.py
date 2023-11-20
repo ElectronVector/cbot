@@ -49,7 +49,7 @@ def test_module_create_in_submodule(tmp_path):
         assert Path(cbot.defaults.DEFAULT_SOURCE_DIR, 'my_submodule', 'my_module.c').exists()
         assert Path(cbot.defaults.DEFAULT_INCLUDE_DIR, 'my_submodule', 'my_module.h').exists()
         assert Path(cbot.defaults.DEFAULT_TEST_DIR, 'my_submodule', 'test_my_module.c').exists()
-        # assert '#define MY_MODULE_H' in Path(cbot.defaults.DEFAULT_INCLUDE_DIR, 'my_module.h').read_text()
-        # assert '#include "my_module.h"' in Path(cbot.defaults.DEFAULT_SOURCE_DIR, 'my_module.c').read_text()
-        # assert 'void test_my_module_NeedToImplement(void)' in Path(cbot.defaults.DEFAULT_TEST_DIR, 'test_my_module.c').read_text()
+        assert '#define MY_MODULE_H' in Path(cbot.defaults.DEFAULT_INCLUDE_DIR, 'my_submodule', 'my_module.h').read_text()
+        assert '#include "my_module.h"' in Path(cbot.defaults.DEFAULT_SOURCE_DIR, 'my_submodule', 'my_module.c').read_text()
+        assert 'void test_my_module_NeedToImplement(void)' in Path(cbot.defaults.DEFAULT_TEST_DIR, 'my_submodule', 'test_my_module.c').read_text()
 
