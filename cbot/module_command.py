@@ -32,9 +32,7 @@ def create(module_name):
         (cbot.defaults.DEFAULT_INCLUDE_DIR / module_path).mkdir(parents=True, exist_ok=True)
 
     # Generate the include guard string.
-    include_guard_str = list(module_path.parts)
-    include_guard_str += [module_name]
-    include_guard_str = '_'.join(include_guard_str).upper() + '_H'
+    include_guard_str = '_'.join(list(module_path.parts) + [module_name]).upper() + '_H'
 
     template = environment.get_template('header.h')
     with Path(cwd, cbot.defaults.DEFAULT_INCLUDE_DIR, module_path, f'{module_name}.h').open(mode='w') as f:
