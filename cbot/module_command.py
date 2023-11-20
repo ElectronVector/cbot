@@ -25,16 +25,31 @@ def create(module_name):
     template_location = Path(__file__).parent / 'templates' / 'module'
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath=template_location))
 
+    module_path = Path(module_name).parents[0]
+    module_name = Path(module_name).stem
+
+    click.echo(f'****{module_path}****')
+    click.echo(f'****{module_name}****')
+
+    if not (cbot.defaults.DEFAULT_INCLUDE_DIR / module_path).exists():
+        (cbot.defaults.DEFAULT_INCLUDE_DIR / module_path).mkdir(parents=True, exist_ok=True)
+
     template = environment.get_template('header.h')
-    with Path(cwd, cbot.defaults.DEFAULT_INCLUDE_DIR, f'{module_name}.h').open(mode='w') as f:
+    with Path(cwd, cbot.defaults.DEFAULT_INCLUDE_DIR, module_path, f'{module_name}.h').open(mode='w') as f:
         f.write(template.render(module_name=module_name))
+
+    if not (cbot.defaults.DEFAULT_SOURCE_DIR / module_path).exists():
+        (cbot.defaults.DEFAULT_SOURCE_DIR / module_path).mkdir(parents=True, exist_ok=True)
 
     template = environment.get_template('source.c')
-    with Path(cwd, cbot.defaults.DEFAULT_SOURCE_DIR, f'{module_name}.c').open(mode='w') as f:
+    with Path(cwd, cbot.defaults.DEFAULT_SOURCE_DIR, module_path, f'{module_name}.c').open(mode='w') as f:
         f.write(template.render(module_name=module_name))
 
+    if not (cbot.defaults.DEFAULT_TEST_DIR / module_path).exists():
+        (cbot.defaults.DEFAULT_TEST_DIR / module_path).mkdir(parents=True, exist_ok=True)
+
     template = environment.get_template('test.c')
-    with Path(cwd, cbot.defaults.DEFAULT_TEST_DIR, f'test_{module_name}.c').open(mode='w') as f:
+    with Path(cwd, cbot.defaults.DEFAULT_TEST_DIR, module_path, f'test_{module_name}.c').open(mode='w') as f:
         f.write(template.render(module_name=module_name))
 
 
