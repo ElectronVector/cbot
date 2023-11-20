@@ -34,9 +34,14 @@ def create(module_name):
     if not (cbot.defaults.DEFAULT_INCLUDE_DIR / module_path).exists():
         (cbot.defaults.DEFAULT_INCLUDE_DIR / module_path).mkdir(parents=True, exist_ok=True)
 
+    include_guard_str = list(module_path.parts)
+    include_guard_str += [module_name]
+    include_guard_str = '_'.join(include_guard_str).upper() + '_H'
+    click.echo(f'****{include_guard_str}****')
+
     template = environment.get_template('header.h')
     with Path(cwd, cbot.defaults.DEFAULT_INCLUDE_DIR, module_path, f'{module_name}.h').open(mode='w') as f:
-        f.write(template.render(module_name=module_name))
+        f.write(template.render(include_guard_str=include_guard_str))
 
     if not (cbot.defaults.DEFAULT_SOURCE_DIR / module_path).exists():
         (cbot.defaults.DEFAULT_SOURCE_DIR / module_path).mkdir(parents=True, exist_ok=True)

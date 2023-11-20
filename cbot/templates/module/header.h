@@ -1,7 +1,7 @@
 {# Used to generate the header file when creating a module. #}
 
-#ifndef {{ module_name.upper() }}_H
-#define {{ module_name.upper() }}_H
+#ifndef {{ include_guard_str }}
+#define {{ include_guard_str }}
 
 
-#endif // {{ module_name.upper() }}_H
+#endif // {{ include_guard_str }}
