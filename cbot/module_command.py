@@ -41,7 +41,7 @@ def create(module_name):
     if not (cbot.defaults.DEFAULT_SOURCE_DIR / module_path).exists():
         (cbot.defaults.DEFAULT_SOURCE_DIR / module_path).mkdir(parents=True, exist_ok=True)
 
-    # Generate the string used to include the header file.
+    # Generate the string used to include the header file. Use forward slashes no matter the platform we are on.
     include_str = '/'.join(list(module_path.parts) + [module_name]) + '.h'
 
     template = environment.get_template('source.c')
