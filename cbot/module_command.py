@@ -34,6 +34,7 @@ def create(module_name):
     if not (cbot.defaults.DEFAULT_INCLUDE_DIR / module_path).exists():
         (cbot.defaults.DEFAULT_INCLUDE_DIR / module_path).mkdir(parents=True, exist_ok=True)
 
+    # Generate the include guard string.
     include_guard_str = list(module_path.parts)
     include_guard_str += [module_name]
     include_guard_str = '_'.join(include_guard_str).upper() + '_H'
