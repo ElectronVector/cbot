@@ -28,9 +28,6 @@ def create(module_name):
     module_path = Path(module_name).parents[0]
     module_name = Path(module_name).stem
 
-    click.echo(f'****{module_path}****')
-    click.echo(f'****{module_name}****')
-
     if not (cbot.defaults.DEFAULT_INCLUDE_DIR / module_path).exists():
         (cbot.defaults.DEFAULT_INCLUDE_DIR / module_path).mkdir(parents=True, exist_ok=True)
 
@@ -38,7 +35,6 @@ def create(module_name):
     include_guard_str = list(module_path.parts)
     include_guard_str += [module_name]
     include_guard_str = '_'.join(include_guard_str).upper() + '_H'
-    click.echo(f'****{include_guard_str}****')
 
     template = environment.get_template('header.h')
     with Path(cwd, cbot.defaults.DEFAULT_INCLUDE_DIR, module_path, f'{module_name}.h').open(mode='w') as f:
@@ -47,16 +43,19 @@ def create(module_name):
     if not (cbot.defaults.DEFAULT_SOURCE_DIR / module_path).exists():
         (cbot.defaults.DEFAULT_SOURCE_DIR / module_path).mkdir(parents=True, exist_ok=True)
 
+    # Generate the string used to include the header file.
+    include_str = '/'.join(list(module_path.parts) + [module_name]) + '.h'
+
     template = environment.get_template('source.c')
     with Path(cwd, cbot.defaults.DEFAULT_SOURCE_DIR, module_path, f'{module_name}.c').open(mode='w') as f:
-        f.write(template.render(module_name=module_name))
+        f.write(template.render(include_str=include_str))
 
     if not (cbot.defaults.DEFAULT_TEST_DIR / module_path).exists():
         (cbot.defaults.DEFAULT_TEST_DIR / module_path).mkdir(parents=True, exist_ok=True)
 
     template = environment.get_template('test.c')
     with Path(cwd, cbot.defaults.DEFAULT_TEST_DIR, module_path, f'test_{module_name}.c').open(mode='w') as f:
-        f.write(template.render(module_name=module_name))
+        f.write(template.render(module_name=module_name, include_str=include_str))
 
 
 module.add_command(create)

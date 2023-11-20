@@ -2,7 +2,7 @@
 
 #include "unity.h"
 
-#include "{{ module_name }}.h"
+#include "{{ include_str }}"
 
 void setUp(void)
 {
