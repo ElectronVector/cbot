@@ -30,7 +30,7 @@ def test_module_create_in_newly_created_project_creates_files(tmp_path):
         result = runner.invoke(cbot.cbot.cli, ['new', 'blerg'])
         assert result.exit_code == 0
         os.chdir('blerg')
-        result = runner.invoke(cbot.cbot.cli, ['module', 'create', 'my_module'])
+        runner.invoke(cbot.cbot.cli, ['module', 'create', 'my_module'])
         assert Path(cbot.defaults.DEFAULT_SOURCE_DIR, 'my_module.c').exists()
         assert Path(cbot.defaults.DEFAULT_INCLUDE_DIR, 'my_module.h').exists()
         assert Path(cbot.defaults.DEFAULT_TEST_DIR, 'test_my_module.c').exists()
@@ -45,7 +45,7 @@ def test_module_create_in_submodule(tmp_path):
         result = runner.invoke(cbot.cbot.cli, ['new', 'blerg'])
         assert result.exit_code == 0
         os.chdir('blerg')
-        result = runner.invoke(cbot.cbot.cli, ['module', 'create', 'my_submodule/my_module'])
+        runner.invoke(cbot.cbot.cli, ['module', 'create', 'my_submodule/my_module'])
         assert Path(cbot.defaults.DEFAULT_SOURCE_DIR, 'my_submodule', 'my_module.c').exists()
         assert Path(cbot.defaults.DEFAULT_INCLUDE_DIR, 'my_submodule', 'my_module.h').exists()
         assert Path(cbot.defaults.DEFAULT_TEST_DIR, 'my_submodule', 'test_my_module.c').exists()
@@ -55,4 +55,18 @@ def test_module_create_in_submodule(tmp_path):
                Path(cbot.defaults.DEFAULT_SOURCE_DIR, 'my_submodule', 'my_module.c').read_text()
         assert '#include "my_submodule/my_module.h"' in \
                Path(cbot.defaults.DEFAULT_TEST_DIR, 'my_submodule', 'test_my_module.c').read_text()
+
+
+def test_module_destroy(tmp_path):
+    runner = CliRunner()
+    with runner.isolated_filesystem(tmp_path):
+        result = runner.invoke(cbot.cbot.cli, ['new', 'blerg'])
+        assert result.exit_code == 0
+        os.chdir('blerg')
+        runner.invoke(cbot.cbot.cli, ['module', 'create', 'my_module'])
+        result = runner.invoke(cbot.cbot.cli, ['module', 'destroy', 'my_module'])
+        assert result.exit_code == 0
+        assert not Path(cbot.defaults.DEFAULT_SOURCE_DIR, 'my_module.c').exists()
+        assert not Path(cbot.defaults.DEFAULT_INCLUDE_DIR, 'my_module.h').exists()
+        assert not Path(cbot.defaults.DEFAULT_TEST_DIR, 'test_my_module.c').exists()
 

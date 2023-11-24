@@ -56,4 +56,19 @@ def create(module_name):
         f.write(template.render(module_name=module_name, include_str=include_str))
 
 
+@click.command()
+@click.argument('module_name')
+def destroy(module_name):
+    click.echo(f"Destroying module '{module_name}'...")
+
+    cwd = Path.cwd()
+    module_path = Path(module_name).parents[0]
+    module_name = Path(module_name).stem
+
+    Path(cwd, cbot.defaults.DEFAULT_SOURCE_DIR, module_path, f'{module_name}.c').unlink()
+    Path(cwd, cbot.defaults.DEFAULT_INCLUDE_DIR, module_path, f'{module_name}.h').unlink()
+    Path(cwd, cbot.defaults.DEFAULT_TEST_DIR, module_path, f'test_{module_name}.c').unlink()
+
+
 module.add_command(create)
+module.add_command(destroy)
