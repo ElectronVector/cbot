@@ -10,6 +10,10 @@ setup(name='cbot',
       author_email='matt@electronvector.com',
       license='MIT',
       packages=['cbot'],
+      install_requires=[
+            'pytest',
+            'jinja2',
+      ],
       entry_points={
             'console_scripts': ['cbot=cbot.cbot:cli'],
       },
