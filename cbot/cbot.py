@@ -4,6 +4,7 @@ import cbot.build_command
 import cbot.run_command
 import cbot.module_command
 import cbot.new_command
+import cbot.test_command
 
 
 @click.group()
@@ -15,6 +16,7 @@ cli.add_command(cbot.new_command.new)
 cli.add_command(cbot.build_command.build)
 cli.add_command(cbot.run_command.run)
 cli.add_command(cbot.module_command.module)
+cli.add_command(cbot.test_command.test)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
